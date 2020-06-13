@@ -1,0 +1,39 @@
+{% load static  %} 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Blog</title>
+        <link rel="stylesheet" , href= "{%  static  'css/bootstrap.min.css'%}">
+    </head>
+    <body>
+        <div class="container">
+            
+            <h1 class="breadcrumb-item active breadcrumb my-4" ><img src="static/images/4.jpg" alt="Error" width="50" height="60">&nbsp; Technology News Blog   </h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Categories</th>
+                    <th>Posts</th>
+                    <th>Topic</th>
+                    <th>Last Post</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in boards %}
+                <tr>
+                    <td><a href="{% url 'board_topics' i.pk%}"> {{i.name}} </a> 
+                        <small class="text-muted d-block">{{i.description}}</small>
+                    </td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    
+                </tr>
+                {% endfor  %}
+            </tbody>
+        </table>
+    </div>
+    </body>
+</html>
+
