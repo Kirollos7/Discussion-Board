@@ -1,17 +1,38 @@
-{% load static  %} 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{{b.name}}</title>
-    <link rel="stylesheet" , href= "{%  static  'css/bootstrap.min.css'%}">
-</head>
-<body>
+{% extends 'main.html' %}
+{% block title %} {{b.name}} {% endblock %}
 
-    <div class="container">
-        <ol class="breadcrumb my-4">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Topics</a> </li>
-            <li class="breadcrumb-item active">{{b.name}}</li>
-        </ol>
- 
-</body>
+
+            {% block breadcrumb%}
+
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Topics</a> </li>
+                <li class="breadcrumb-item active">{{board.name}}</li>
+               {% endblock %}
+
+            {% block content %}
+               <a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New Topic</a>
+<hr>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>Topic</th>
+        <th>Created by</th>
+        <th>Posts</th>
+        <th>Views</th>
+        <th>Created dt</th>
+    </tr>
+    </thead>
+    <tbody>
+    {%for topic in board.topics.all%}
+    <tr>
+        <td>{{ topic.subject}}</td>
+        <td>{{ topic.created_by.username}}</td>
+        <td>0</td>
+        <td>0</td>
+        <td>{{ topic.created_dt}}</td>
+
+    </tr>
+    {%endfor%}
+
+    </tbody>
+</table>
+            {% endblock %}
