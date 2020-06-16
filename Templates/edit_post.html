@@ -1,13 +1,13 @@
 {% extends 'main.html' %}
 
-{% block title %} Create New Topic{% endblock %}
+{% block title %} Edit Post{% endblock %}
 
 
             {% block breadcrumb%}
 
                 <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a> </li>
-                <li class="breadcrumb-item active"><a href="{% url 'board_topics' board.pk%}" >{{board.name}} </a> </li>
-                <li class="breadcrumb-item active">New Topic</li>
+                <li class="breadcrumb-item active"><a href="{% url 'board_topics' post.topic.board.pk %}" >{{post.topic.board.name}} </a> </li>
+                <li class="breadcrumb-item active">Edit Post</li>
 
                {% endblock %}
 
@@ -17,6 +17,6 @@
     {% csrf_token %}
 
     {% include 'includes/form.html'%}
-    <button type="submit" class="btn btn-success">Post</button>
+    <button type="submit" class="btn btn-success">Save Changes</button>
   </form>
             {% endblock %}

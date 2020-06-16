@@ -1,17 +1,17 @@
 {% extends 'main.html' %}
-{% block title %} {{b.name}} {% endblock %}
+{% block title %} {{board.name}} {% endblock %}
 
 
             {% block breadcrumb%}
 
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Topics</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a> </li>
                 <li class="breadcrumb-item active">{{board.name}}</li>
                {% endblock %}
 
             {% block content %}
                <a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New Topic</a>
 <hr>
-<table class="table">
+<table class="table  table-striped">
     <thead class="thead-dark">
     <tr>
         <th>Topic</th>
@@ -22,12 +22,12 @@
     </tr>
     </thead>
     <tbody>
-    {%for topic in board.topics.all%}
+    {%for topic in topics %}
     <tr>
         <td>  <a href="{%  url 'topic_posts' board.pk topic.pk%}" >{{ topic.subject}} </a></td>
         <td>{{ topic.created_by.username}}</td>
-        <td>0</td>
-        <td>0</td>
+        <td>{{topic.comments}}</td>
+        <td>{{topic.views}}</td>
         <td>{{ topic.created_dt}}</td>
 
     </tr>
@@ -35,4 +35,93 @@
 
     </tbody>
 </table>
-            {% endblock %}
+
+<!--
+<ul class="pagination">
+    {% if topics.has_previous %}
+    <li class="page-item">
+    <a class="page-link" href="?page= {{topics.previous_page_number}}">Previous</a>
+    </li>
+    {% endif %}
+    {% for i in topics.paginator.page_range%}
+    {% if topics.number == page_num %}
+        <li class="page-item active">
+            {{page_num}}
+            <span>(current)</span>
+        </li>
+    {% else %}
+    <li class="page-item">
+            {{page_num}}
+            <a class="page-link" href="?page= {{page_num}}">{{page_num}}</a>
+        </li>
+
+    {% endif %}
+    {% endfor %}
+
+
+     {% if topics.has_next %}
+    <li class="page-item">
+    <a class="page-link" href="?page= {{topics.next_page_number}}">Next</a>
+    </li>
+    {% else %}
+    <li class="page-item disable">
+        <span>Next</span>
+    </li>
+    {% endif %}
+
+</ul>
+         -->
+
+
+
+
+{% if topics.has_other_pages %}
+  <nav aria-label="Topics pagination" class="mb-4">
+    <ul class="pagination">
+      {% if topics.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ topics.previous_page_number }}">Previous</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+      {% endif %}
+
+      {% for page_num in topics.paginator.page_range %}
+        {% if topics.number == page_num %}
+          <li class="page-item active">
+            <span class="page-link">
+              {{ page_num }}
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if topics.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ topics.next_page_number }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+
+
+
+
+
+
+
+
+
+{% endblock %}
